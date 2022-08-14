@@ -6,7 +6,7 @@ import fetchCountries from './fetchCountries';
 const DEBOUNCE_DELAY = 300;
 const input = document.querySelector('#search-box')
 const countryList = document.querySelector('.country-list')
-// countryList.style.display = "flex";
+countryList.style.paddingLeft = 0;
 const countryInfo = document.querySelector('.country-info')
 
 input.addEventListener('input', debounce(search, DEBOUNCE_DELAY))
@@ -35,7 +35,7 @@ function check (list) {
     const rendlist = document.querySelectorAll('.country-list__list')
     for (var i = 0, length = rendlist.length; i < length; i++) { 
       rendlist[i].style.display = 'flex'
-      rendlist[i].style.fontSize = '10px';
+      rendlist[i].style.fontSize = '8px';
       rendlist[i].style.alignItems = 'center'
       rendlist[i].style.marginBottom = '10px';
     }
@@ -43,6 +43,12 @@ function check (list) {
   else {
     clearMarkup ()
     renderUserList(list, countryInfo);
+const rendUserList = document.querySelectorAll('.country-list__list')
+for (var i = 0, length = rendUserList.length; i < length; i++) { 
+  rendUserList[i].style.listStyle = 'none';
+  rendUserList[i].style.display = 'flex'
+  rendUserList[i].style.alignItems = 'center'
+}
     return;
   }
 }
@@ -53,32 +59,27 @@ function clearMarkup () {
 }
 
   function renderList(list, listBox) {
-
     const markup = list
          .map((item) => {
          return `<li class="country-list__list">
           <img src="${item.flags.svg}" alt="flag" width="30" height="30">
-          <h1 style="margin-left="20px"">${item.name.official}</h1>
+          <h1 style="margin-left: 20px">${item.name.official}</h1>
                 </li>`
-
         })
       .join('');
-
     return (listBox.innerHTML = markup);
-    
   }
  
-
 function renderUserList(list, userBox) {
     const markup = list
       .map((item) => {
-        return `<li>    
-            <img src="${item.flags.svg}" width="40px" alt="${item.name}">
+        return `<li class="country-list__list">    
+            <img src="${item.flags.svg}" width="30px" height="30" alt="${item.name}">
             <h2>${item.name.official}</h2>
-            <p>Capital</b>: ${item.capital}</p>
-            <p>Population</b>: ${item.population}</p>
-            <p>Languages</b>: ${(Object.values(item.languages))}</p>
-        </li>`;
+            </li>
+            <p><b>Capital</b>: ${item.capital}</p>
+            <p><b>Population</b>: ${item.population}</p>
+            <p><b>Languages</b>: ${(Object.values(item.languages))}</p>`;
       })
       .join("");
       return (userBox.innerHTML = markup);
