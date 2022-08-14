@@ -6,6 +6,7 @@ import fetchCountries from './fetchCountries';
 const DEBOUNCE_DELAY = 300;
 const input = document.querySelector('#search-box')
 const countryList = document.querySelector('.country-list')
+// countryList.style.display = "flex";
 const countryInfo = document.querySelector('.country-info')
 
 input.addEventListener('input', debounce(search, DEBOUNCE_DELAY))
@@ -31,6 +32,13 @@ function check (list) {
   } else if (list.length <= 10 && list.length > 1) {
     clearMarkup ()
     renderList(list, countryList);
+    const rendlist = document.querySelectorAll('.country-list__list')
+    for (var i = 0, length = rendlist.length; i < length; i++) { 
+      rendlist[i].style.display = 'flex'
+      rendlist[i].style.fontSize = '10px';
+      rendlist[i].style.alignItems = 'center'
+      rendlist[i].style.marginBottom = '10px';
+    }
   }  
   else {
     clearMarkup ()
@@ -45,16 +53,21 @@ function clearMarkup () {
 }
 
   function renderList(list, listBox) {
+
     const markup = list
          .map((item) => {
-         return `<li>
-          <img src="${item.flags.svg}" alt="flag" width="40">
-          <h1 class="country-list__title">${item.name.official}</h1>
+         return `<li class="country-list__list">
+          <img src="${item.flags.svg}" alt="flag" width="30" height="30">
+          <h1 style="margin-left="20px"">${item.name.official}</h1>
                 </li>`
+
         })
       .join('');
+
     return (listBox.innerHTML = markup);
+    
   }
+ 
 
 function renderUserList(list, userBox) {
     const markup = list
